@@ -1,13 +1,14 @@
+import { useRef, useState } from 'react';
+import { useAtom } from 'jotai';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase';
-import { useRef, useState } from 'react';
 import FileList from '../components/FileList';
 import FileUpload from '../components/FileUpload';
 import Status from '../components/Status';
 import FileButtons from '../components/FileButtons';
 import { getAuth, signOut } from 'firebase/auth';
-import { useAtom } from 'jotai';
 import { userAtom } from '../utils/useAuth';
+import UserCard from '../components/UserCard';
 import './Home.css';
 
 export default function Home() {
@@ -82,6 +83,7 @@ export default function Home() {
   return (
     <main>
       <h1>Uploady</h1>
+      <UserCard />
       <button onClick={handleLogout}>Logout</button>
       <div className="card">
         <Status status={status} percentage={percentage} />
