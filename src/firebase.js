@@ -3,13 +3,13 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBKY4KkPdXngag7PN784Me0dNTMyNCCdA8",
-  authDomain: "file-uploader-d6e48.firebaseapp.com",
-  databaseURL: "https://file-uploader-d6e48.firebaseio.com",
-  projectId: "file-uploader-d6e48",
-  storageBucket: "file-uploader-d6e48.appspot.com",
-  messagingSenderId: "665334874422",
-  appId: "1:665334874422:web:b2e23bbe035b3274a73397"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_DATABASE_URL,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID
 };
 
 export const app = initializeApp(firebaseConfig);
