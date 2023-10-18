@@ -1,14 +1,15 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAtom } from 'jotai';
 import {
   getAuth,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
 import { providerGoogle } from '../firebase';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useAtom } from 'jotai';
 import { userAtom } from '../utils/useAuth';
 import './Login.css';
+import AnimatedDiv from '../components/AnimatedDiv';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ export default function Login() {
       <div className="container">
         <div className="login-area">
           <h1>Uploady</h1>
-          {error && <div className="error">{error}</div>}
+          {error && <AnimatedDiv className="error">{error}</AnimatedDiv>}
           <form className="login-form" onSubmit={handleEmailPasswordLogin}>
             <div className="row">
               <label>Email</label>

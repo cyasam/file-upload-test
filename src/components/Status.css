@@ -18,7 +18,8 @@
   text-align: center;
 }
 
-.uploading {
+.uploading,
+.loading {
   width: 100%;
   position: relative;
   padding: 10px;

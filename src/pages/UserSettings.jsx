@@ -6,9 +6,11 @@ import {
   reauthenticateWithCredential,
   updatePassword,
 } from 'firebase/auth';
+import { useAtom } from 'jotai';
 import Layout from '../components/Layout';
 import { userAtom } from '../utils/useAuth';
-import { useAtom } from 'jotai';
+import AnimatedDiv from '../components/AnimatedDiv';
+import './UserSettings.css';
 
 export default function UserSettings() {
   const [user] = useAtom(userAtom);
@@ -84,38 +86,40 @@ export default function UserSettings() {
 
   return (
     <Layout>
-      {loading ? (
-        <div>Updating Password</div>
-      ) : (
-        <>
-          {error && <div>{error}</div>}
-          {success && <div>Updated</div>}
-        </>
-      )}
+      <div className="newpassword-area">
+        {loading ? (
+          <AnimatedDiv className="loading">Updating Password</AnimatedDiv>
+        ) : (
+          <>
+            {error && <AnimatedDiv className="error">{error}</AnimatedDiv>}
+            {success && <AnimatedDiv className="success">Updated</AnimatedDiv>}
+          </>
+        )}
 
-      {methods && (
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            <label>Email</label>
-            <input type="text" disabled={true} value={user.email} />
-          </div>
-          {methods.includes('password') && (
+        {methods && (
+          <form onSubmit={handleSubmit}>
             <div className="row">
-              <label>Current Password</label>
-              <input type="password" ref={currentPasswordRef} />
+              <label>Email</label>
+              <input type="text" disabled={true} value={user.email} />
             </div>
-          )}
-          <div className="row">
-            <label>New Password</label>
-            <input type="password" ref={newPasswordRef} />
-          </div>
-          <div className="row">
-            <button disabled={loading} type="submit">
-              Update password
-            </button>
-          </div>
-        </form>
-      )}
+            {methods.includes('password') && (
+              <div className="row">
+                <label>Current Password</label>
+                <input type="password" ref={currentPasswordRef} />
+              </div>
+            )}
+            <div className="row">
+              <label>New Password</label>
+              <input type="password" ref={newPasswordRef} />
+            </div>
+            <div className="row">
+              <button disabled={loading} type="submit">
+                Update password
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
     </Layout>
   );
 }

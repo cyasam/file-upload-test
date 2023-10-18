@@ -51,6 +51,12 @@ input[type='password'] {
   transition: border-color 0.25s;
 }
 
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  width: 100%;
+}
+
 button {
   cursor: pointer;
 }
