@@ -20,17 +20,19 @@ export default function FileButtons({
   return (
     <>
       {status !== 'uploading' && (
-        <button
-          disabled={acceptedFiles.length === 0 || status === 'success'}
-          type="button"
-          onClick={onStart}
-        >
-          Upload
-        </button>
+        <div className="uploading-buttons">
+          <button
+            disabled={acceptedFiles.length === 0 || status === 'success'}
+            type="button"
+            onClick={onStart}
+          >
+            Upload
+          </button>
+        </div>
       )}
 
       {status === 'uploading' && (
-        <>
+        <div className="uploading-buttons">
           <button type="button" onClick={onPauseResume}>
             {paused ? 'Resume' : 'Pause'}
           </button>
@@ -39,7 +41,7 @@ export default function FileButtons({
               Cancel
             </button>
           )}
-        </>
+        </div>
       )}
     </>
   );

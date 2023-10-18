@@ -6,9 +6,8 @@ import FileList from '../components/FileList';
 import FileUpload from '../components/FileUpload';
 import Status from '../components/Status';
 import FileButtons from '../components/FileButtons';
-import { getAuth, signOut } from 'firebase/auth';
 import { userAtom } from '../utils/useAuth';
-import UserCard from '../components/UserCard';
+import Layout from '../components/Layout';
 import './Home.css';
 
 export default function Home() {
@@ -75,19 +74,11 @@ export default function Home() {
     }
   };
 
-  const handleLogout = async () => {
-    const auth = getAuth();
-    await signOut(auth);
-  };
-
   return (
-    <main>
-      <h1>Uploady</h1>
-      <UserCard />
-      <button onClick={handleLogout}>Logout</button>
+    <Layout>
       <div className="card">
         <Status status={status} percentage={percentage} />
-        <div>
+        <div className="upload-area">
           <FileUpload
             disabled={disabled}
             onDrop={(files) => {
@@ -107,6 +98,6 @@ export default function Home() {
         </div>
       </div>
       <FileList updated={status === 'success'} />
-    </main>
+    </Layout>
   );
 }

@@ -1,0 +1,46 @@
+.success {
+  padding: 10px;
+  margin-bottom: 16px;
+  background-color: green;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.error {
+  padding: 10px;
+  margin-bottom: 16px;
+  background-color: red;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.uploading {
+  width: 100%;
+  position: relative;
+  padding: 10px;
+  margin-bottom: 16px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.uploading .text {
+  position: relative;
+  z-index: 10;
+  margin: 0;
+}
+
+.uploading .percentage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: #747bff;
+}

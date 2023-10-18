@@ -1,0 +1,38 @@
+.auth-area {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-area .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-area {
+  max-width: 480px;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  margin-bottom: 16px;
+}
+
+.row label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.provider-area {
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

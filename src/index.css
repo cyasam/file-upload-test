@@ -13,6 +13,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -24,8 +28,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -35,7 +37,10 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button,
+input[type='text'],
+input[type='email'],
+input[type='password'] {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -43,15 +48,27 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
-  cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+
+button {
+  cursor: pointer;
+}
+button:hover,
+input[type='text']:hover,
+input[type='email']:hover,
+input[type='password']:hover {
   border-color: #646cff;
 }
 button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:focus-visible,
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus,
+input[type='text']:focus-visible,
+input[type='email']:focus-visible,
+input[type='password']:focus-visible {
+  outline: 4px auto #646cff;
 }
 
 @media (prefers-color-scheme: light) {

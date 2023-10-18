@@ -27,7 +27,9 @@ export default function FileUpload({ disabled, onDrop }) {
       <input {...getInputProps()} />
       <p>Drag n drop some files here, or click to select files</p>
       {acceptedFiles.map((file, index) => (
-        <p key={index}>{file.name}</p>
+        <p className="accepted-file" key={index}>
+          {file.name}
+        </p>
       ))}
     </div>
   );

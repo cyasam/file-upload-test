@@ -1,0 +1,56 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2em;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+}
+
+.user-card .user-area {
+  position: relative;
+}
+
+.user-card .photo {
+  display: block;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.user-card .user {
+  position: absolute;
+  top: calc(100% + 16px);
+  right: -20px;
+  padding: 18px 20px;
+  background-color: #000;
+  border-radius: 8px;
+}
+
+.user-card .user p:first-child {
+  margin-bottom: 8px;
+}
+
+.user-card .user p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.user-card button {
+  font-size: 0.9rem;
+}
+
+.user-card .link {
+  display: inline-block;
+  margin-bottom: 16px;
+}
