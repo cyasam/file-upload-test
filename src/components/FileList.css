@@ -1,0 +1,30 @@
+.file-list-area {
+  margin-top: 50px;
+}
+
+.file-list {
+  width: 100%;
+  border-spacing: 0;
+}
+
+.file-list thead th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.file-list .row th {
+  text-align: left;
+}
+
+.file-list th,
+.file-list td {
+  padding: 10px 0;
+}
+
+.file-list td {
+  font-size: 15px;
+}
+
+.file-list td:last-child {
+  width: 150px;
+  text-align: right;
+}

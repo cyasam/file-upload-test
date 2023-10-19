@@ -77,8 +77,8 @@ export default function Home() {
   return (
     <Layout>
       <div className="card">
-        <Status status={status} percentage={percentage} />
         <div className="upload-area">
+          <Status status={status} percentage={percentage} />
           <FileUpload
             disabled={disabled}
             onDrop={(files) => {

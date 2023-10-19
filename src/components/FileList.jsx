@@ -1,24 +1,90 @@
-import {
-  deleteObject,
-  getDownloadURL,
-  getMetadata,
-  listAll,
-  ref,
-} from 'firebase/storage';
+import { getDownloadURL, getMetadata, listAll, ref } from 'firebase/storage';
 import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useAtom } from 'jotai';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
 import { storage } from '../firebase';
 import { userAtom } from '../utils/useAuth';
+import FileDelete from './FileDelete';
+
+import './FileList.css';
 
 FileList.propTypes = {
   updated: PropTypes.bool,
 };
 
+const getFileSize = (size) => {
+  if (size < 1024 ** 2) {
+    return `${(size / 1024).toFixed(2)} KB`;
+  }
+
+  return `${(size / 1024 ** 2).toFixed(2)} MB`;
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return Intl.DateTimeFormat('en-US', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(date);
+};
+
+const columnHelper = createColumnHelper();
+
+const columns = [
+  columnHelper.accessor((row) => row.name, {
+    id: 'name',
+    cell: (info) => <span>{info.getValue()}</span>,
+    header: () => <span>Name</span>,
+  }),
+
+  columnHelper.accessor((row) => row.size, {
+    id: 'size',
+    cell: (info) => <span>{getFileSize(info.getValue())}</span>,
+    header: () => <span>Size</span>,
+  }),
+
+  columnHelper.accessor((row) => row.timeCreated, {
+    id: 'timeCreated',
+    cell: (info) => <span>{formatDate(info.getValue())}</span>,
+    header: () => <span>Created</span>,
+  }),
+
+  columnHelper.accessor((row) => row.updated, {
+    id: 'updated',
+    cell: (info) => <span>{formatDate(info.getValue())}</span>,
+    header: () => <span>Updated</span>,
+  }),
+
+  columnHelper.display({
+    id: 'delete',
+    cell: FileDelete,
+  }),
+];
+
 export default function FileList({ updated }) {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [user] = useAtom(userAtom);
+
+  const table = useReactTable({
+    data: files,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    meta: {
+      removeRow: (rowIndex) => {
+        const setFilterFunc = (old) =>
+          old.filter((_row, index) => index !== rowIndex);
+        setFiles(setFilterFunc);
+      },
+    },
+  });
 
   const fetchFiles = useCallback(async () => {
     try {
@@ -63,45 +129,46 @@ export default function FileList({ updated }) {
     }
   }, [updated, fetchFiles]);
 
-  const getFileSize = (size) => {
-    if (size < 1024 ** 2) {
-      return `${(size / 1024).toFixed(2)} KB`;
-    }
-
-    return `${(size / 1024 ** 2).toFixed(2)} MB`;
-  };
-
-  const deleteFile = async (name) => {
-    try {
-      const fileRef = ref(storage, `${user.uid}/${name}`);
-
-      await deleteObject(fileRef);
-      fetchFiles();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <div>
-      <h2>Files</h2>
-      {loading && <div>Loading...</div>}
+    <div className="file-list-area">
+      {loading && <div className="loading">Loading...</div>}
       {files && (
         <>
           {!loading && files.length === 0 && <div>No files</div>}
-          <ul className="list">
-            {files?.map((file) => (
-              <li key={file.generation}>
-                <a target="_blank" rel="noreferrer" href={file.url}>
-                  {file.name}
-                </a>
-                <span> - {getFileSize(file.size)}</span>
-                <button type="button" onClick={() => deleteFile(file.name)}>
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
+          {files.length > 0 && (
+            <table className="file-list">
+              <thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr className="row" key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <th key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <td key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </>
       )}
     </div>

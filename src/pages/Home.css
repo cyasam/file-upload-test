@@ -13,12 +13,16 @@
 }
 
 .upload-area {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .dropzone {
+  width: 100%;
   padding: 20px;
   border-radius: 8px;
   cursor: pointer;
