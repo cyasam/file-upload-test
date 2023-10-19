@@ -24,7 +24,7 @@
   font-size: 15px;
 }
 
-.file-list td:last-child {
-  width: 150px;
+.file-list .delete {
+  width: 100px;
   text-align: right;
 }

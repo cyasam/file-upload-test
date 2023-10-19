@@ -14,6 +14,7 @@ import { userAtom } from '../utils/useAuth';
 import FileDelete from './FileDelete';
 
 import './FileList.css';
+import FileLink from './FileLink';
 
 FileList.propTypes = {
   updated: PropTypes.bool,
@@ -60,6 +61,11 @@ const columns = [
     id: 'updated',
     cell: (info) => <span>{formatDate(info.getValue())}</span>,
     header: () => <span>Updated</span>,
+  }),
+
+  columnHelper.display({
+    id: 'link',
+    cell: FileLink,
   }),
 
   columnHelper.display({

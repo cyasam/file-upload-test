@@ -30,8 +30,10 @@ export default function FileDelete({ row, table }) {
   };
 
   return (
-    <button type="button" disabled={deleting} onClick={deleteFile}>
-      {deleting ? 'Deleting' : 'Delete'}
-    </button>
+    <div className="delete">
+      <button type="button" disabled={deleting} onClick={deleteFile}>
+        {deleting ? 'Deleting' : 'Delete'}
+      </button>
+    </div>
   );
 }
