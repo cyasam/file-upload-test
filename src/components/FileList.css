@@ -2,6 +2,12 @@
   margin-top: 50px;
 }
 
+.file-list-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .file-list {
   width: 100%;
   border-spacing: 0;
@@ -22,6 +28,15 @@
 
 .file-list td {
   font-size: 15px;
+  padding-right: 20px;
+}
+
+.file-list td:last-child {
+  padding-right: 0;
+}
+
+.file-list td span {
+  white-space: nowrap;
 }
 
 .file-list .delete {

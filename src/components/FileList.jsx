@@ -152,43 +152,45 @@ export default function FileList({ updated }) {
         <>
           {!loading && files.length === 0 && <div>No files</div>}
           {files.length > 0 && (
-            <table className="file-list">
-              <thead>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr className="row" key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <th key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody>
-                {table.getRowModel().rows.map((row) => (
-                  <tr
-                    key={row.id}
-                    className={`row${
-                      deletingRow === row.id ? ' deleting' : ''
-                    }`}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="file-list-wrapper">
+              <table className="file-list">
+                <thead>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr className="row" key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => (
+                        <th key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr
+                      key={row.id}
+                      className={`row${
+                        deletingRow === row.id ? ' deleting' : ''
+                      }`}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </>
       )}

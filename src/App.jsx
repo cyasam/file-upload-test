@@ -5,13 +5,18 @@ import PrivateRoutes from './components/PrivateRoutes';
 import UserSettings from './pages/UserSettings';
 import useAuth from './utils/useAuth';
 import './App.css';
+import Loading from './assets/loading.svg';
 
 function App() {
   const { loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
-    return null;
+    return (
+      <div className="main-loading">
+        <img src={Loading} alt="loading" />
+      </div>
+    );
   }
 
   return (
