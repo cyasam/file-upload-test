@@ -1,3 +1,15 @@
+.uploading-area {
+  width: 100%;
+}
+
+.uploading-area p {
+  margin: 0;
+}
+
+.uploading-area .name {
+  margin-bottom: 16px;
+}
+
 .success {
   padding: 10px;
   margin-bottom: 16px;

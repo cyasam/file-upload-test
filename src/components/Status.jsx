@@ -5,23 +5,32 @@ import './Status.css';
 
 Status.propTypes = {
   status: PropTypes.string,
-  percentage: PropTypes.number,
+  percentages: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default function Status({ status, percentage }) {
+export default function Status({ status, percentages }) {
   return (
     <>
       {status === 'uploading' && (
-        <AnimatedDiv className="uploading">
-          <p className="text">{`Uploading... (${percentage}%)`}</p>
-          <motion.div
-            className="percentage"
-            animate={{
-              width: `${percentage}%`,
-              transition: { duration: 0.8 },
-            }}
-          />
-        </AnimatedDiv>
+        <>
+          {percentages.map(({ value, name, completed }, index) => (
+            <div className="uploading-area" key={index}>
+              <p className="name">{name}</p>
+              <AnimatedDiv className={completed ? 'success' : 'uploading'}>
+                <p className="text">
+                  {completed ? 'Uploaded' : `Uploading... (${value}%)`}
+                </p>
+                <motion.div
+                  className="percentage"
+                  animate={{
+                    width: `${value}%`,
+                    transition: { duration: 0.8 },
+                  }}
+                />
+              </AnimatedDiv>
+            </div>
+          ))}
+        </>
       )}
       {status === 'success' && (
         <AnimatedDiv className="success">Uploaded</AnimatedDiv>

@@ -10,7 +10,6 @@ FileUpload.propTypes = {
 export default function FileUpload({ disabled, onDrop }) {
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     disabled,
-    multiple: false,
     accept: {
       'image/jpeg': [],
       'image/png': [],

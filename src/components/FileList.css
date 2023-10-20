@@ -28,3 +28,7 @@
   width: 100px;
   text-align: right;
 }
+
+.file-list tbody .row.deleting td {
+  opacity: 0.5;
+}

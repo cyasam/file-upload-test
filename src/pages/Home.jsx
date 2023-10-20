@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAtom } from 'jotai';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../firebase';
@@ -13,11 +13,11 @@ import './Home.css';
 export default function Home() {
   const [status, setStatus] = useState('idle');
   const [paused, setPaused] = useState(false);
-  const [percentage, setPercentage] = useState(0);
+  const [percentages, setPercentages] = useState([]);
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [user] = useAtom(userAtom);
 
-  const uploadTaskRef = useRef();
+  const uploadTaskRef = useRef([]);
   const disabled = status === 'uploading';
 
   const uploadFile = () => {
@@ -27,49 +27,83 @@ export default function Home() {
 
     setStatus('uploading');
 
-    const file = acceptedFiles[0];
+    acceptedFiles.forEach((file, index) => {
+      const fileName = file.name;
+      const storageRef = ref(storage, `${user.uid}/${fileName}`);
+      const task = uploadBytesResumable(storageRef, file);
 
-    const fileName = file.name;
-    const storageRef = ref(storage, `${user.uid}/${fileName}`);
-    uploadTaskRef.current = uploadBytesResumable(storageRef, file);
+      let tasks = uploadTaskRef.current;
+      tasks.push(task);
 
-    const uploadTask = uploadTaskRef.current;
+      setPercentages((prev) => {
+        const clone = [...prev];
+        clone[index] = { name: file.name, completed: false, value: 0 };
+        return clone;
+      });
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setPercentage(Math.round(progress));
-      },
-      (error) => {
-        if (error.code === 'storage/canceled') {
-          setStatus('canceled');
-        } else {
-          setStatus('failed');
+      task.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+          setPercentages((prev) => {
+            const clone = [...prev];
+            clone[index] = { ...clone[index], value: Math.round(progress) };
+            return clone;
+          });
+        },
+        (error) => {
+          setPercentages([]);
+
+          if (error.code === 'storage/canceled') {
+            setStatus('canceled');
+          } else {
+            setStatus('failed');
+          }
+        },
+        () => {
+          setPercentages((prev) => {
+            const clone = [...prev];
+            clone[index] = { ...clone[index], completed: true };
+            return clone;
+          });
         }
-      },
-      () => {
-        acceptedFiles.length = 0;
-        uploadTask.current = undefined;
-        setStatus('success');
-      }
-    );
+      );
+    });
   };
+
+  useEffect(() => {
+    if (
+      percentages.length > 0 &&
+      percentages.every(({ completed }) => completed === true)
+    ) {
+      uploadTaskRef.current.length = 0;
+      acceptedFiles.length = 0;
+      setPercentages([]);
+      setStatus('success');
+    }
+  }, [percentages, acceptedFiles]);
 
   const cancelUpload = () => {
     const uploadTask = uploadTaskRef.current;
-    uploadTask.cancel();
+    uploadTask.forEach((task) => {
+      task.cancel();
+    });
   };
 
   const pauseResumeUpload = () => {
     const uploadTask = uploadTaskRef.current;
 
     if (paused) {
-      uploadTask.resume();
+      uploadTask.forEach((task) => {
+        task.resume();
+      });
       setPaused(false);
     } else {
-      uploadTask.pause();
+      uploadTask.forEach((task) => {
+        task.pause();
+      });
       setPaused(true);
     }
   };
@@ -78,7 +112,7 @@ export default function Home() {
     <Layout>
       <div className="card">
         <div className="upload-area">
-          <Status status={status} percentage={percentage} />
+          <Status status={status} percentages={percentages} />
           <FileUpload
             disabled={disabled}
             onDrop={(files) => {
@@ -97,7 +131,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <FileList updated={status === 'success'} />
+      <FileList updated={status === 'success' || status === 'canceled'} />
     </Layout>
   );
 }

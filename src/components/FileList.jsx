@@ -77,6 +77,7 @@ const columns = [
 export default function FileList({ updated }) {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
+  const [deletingRow, setDeletingRow] = useState();
   const [user] = useAtom(userAtom);
 
   const table = useReactTable({
@@ -84,10 +85,15 @@ export default function FileList({ updated }) {
     columns,
     getCoreRowModel: getCoreRowModel(),
     meta: {
-      removeRow: (rowIndex) => {
-        const setFilterFunc = (old) =>
-          old.filter((_row, index) => index !== rowIndex);
+      removeRow: (rowId) => {
+        const setFilterFunc = (old) => {
+          return old.filter((_row) => _row.id !== rowId);
+        };
         setFiles(setFilterFunc);
+        setDeletingRow();
+      },
+      removingRow: (rowId) => {
+        setDeletingRow(rowId);
       },
     },
   });
@@ -113,7 +119,11 @@ export default function FileList({ updated }) {
       );
 
       const files = filesMetaResult.map((file, index) => {
-        const obj = { ...file.value, url: filesDownloadResult[index].value };
+        const obj = {
+          ...file.value,
+          id: index,
+          url: filesDownloadResult[index].value,
+        };
         return obj;
       });
 
@@ -161,7 +171,12 @@ export default function FileList({ updated }) {
               </thead>
               <tbody>
                 {table.getRowModel().rows.map((row) => (
-                  <tr key={row.id}>
+                  <tr
+                    key={row.id}
+                    className={`row${
+                      deletingRow === row.id ? ' deleting' : ''
+                    }`}
+                  >
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id}>
                         {flexRender(

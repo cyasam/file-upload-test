@@ -17,11 +17,13 @@ export default function FileDelete({ row, table }) {
 
   const deleteFile = async () => {
     setDeleting(true);
+    meta?.removingRow(row.id);
+
     try {
       const fileRef = ref(storage, `${user.uid}/${row.getValue('name')}`);
 
       await deleteObject(fileRef);
-      meta?.removeRow(row.index);
+      meta?.removeRow(row.original.id);
       setDeleting(false);
     } catch (error) {
       setDeleting(false);
@@ -31,7 +33,12 @@ export default function FileDelete({ row, table }) {
 
   return (
     <div className="delete">
-      <button type="button" disabled={deleting} onClick={deleteFile}>
+      <button
+        type="button"
+        disabled={deleting}
+        data-row-id={row.id}
+        onClick={deleteFile}
+      >
         {deleting ? 'Deleting' : 'Delete'}
       </button>
     </div>
