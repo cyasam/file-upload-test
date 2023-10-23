@@ -5,9 +5,11 @@ import Register from './pages/Register';
 import PrivateRoutes from './components/PrivateRoutes';
 import UserSettings from './pages/UserSettings';
 import ForgotPassword from './pages/ForgotPassword';
+import ForgotPasswordChange from './pages/ForgotPasswordChange';
 import useAuth from './utils/useAuth';
 import Loading from './assets/loading.svg';
 import './App.css';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { loading } = useAuth();
@@ -28,8 +30,12 @@ function App() {
         <Route path="/settings" element={<UserSettings />} />
       </Route>
       <Route path="/login" element={<Login />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/forgot-password">
+        <Route index element={<ForgotPassword />} />
+        <Route path="change" element={<ForgotPasswordChange />} />
+      </Route>
       <Route path="/register" element={<Register />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

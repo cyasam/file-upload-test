@@ -81,45 +81,43 @@ export default function UpdatePasswordForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleChangePassword}>
-        {methods?.includes('password') && (
-          <div className="row">
-            <label>Current Password</label>
-            <input
-              type="password"
-              autoComplete="current-password"
-              ref={currentPasswordRef}
-            />
-          </div>
-        )}
+    <form onSubmit={handleChangePassword}>
+      {methods?.includes('password') && (
         <div className="row">
-          <label>New Password</label>
+          <label>Current Password</label>
           <input
             type="password"
-            autoComplete="new-password"
-            ref={newPasswordRef}
+            autoComplete="current-password"
+            ref={currentPasswordRef}
           />
         </div>
-        <div className="row bottom">
-          <button disabled={loading} type="submit">
-            {loading ? 'Loading...' : 'Update Password'}
-          </button>
+      )}
+      <div className="row">
+        <label>New Password</label>
+        <input
+          type="password"
+          autoComplete="new-password"
+          ref={newPasswordRef}
+        />
+      </div>
+      <div className="row bottom">
+        <button disabled={loading} type="submit">
+          {loading ? 'Loading...' : 'Update Password'}
+        </button>
 
-          {loading ? (
-            <AnimatedDiv className="result loading">Updating...</AnimatedDiv>
-          ) : (
-            <>
-              {error && (
-                <AnimatedDiv className="result error">{error}</AnimatedDiv>
-              )}
-              {success && (
-                <AnimatedDiv className="result success">Updated</AnimatedDiv>
-              )}
-            </>
-          )}
-        </div>
-      </form>
-    </>
+        {loading ? (
+          <AnimatedDiv className="result loading">Updating...</AnimatedDiv>
+        ) : (
+          <>
+            {error && (
+              <AnimatedDiv className="result error">{error}</AnimatedDiv>
+            )}
+            {success && (
+              <AnimatedDiv className="result success">Updated</AnimatedDiv>
+            )}
+          </>
+        )}
+      </div>
+    </form>
   );
 }
