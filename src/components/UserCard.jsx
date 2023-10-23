@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAtom } from 'jotai';
 import { getAuth, signOut } from 'firebase/auth';
-import { userAtom } from '../utils/useAuth';
 import { Link } from 'react-router-dom';
+import { userAtom } from '../utils/useAuth';
 
 export default function UserCard() {
   const [user] = useAtom(userAtom);
@@ -35,21 +35,27 @@ export default function UserCard() {
   return (
     <div className="user-card">
       <div ref={userAreaRef} className="user-area">
-        <img
-          className="photo"
-          src={user.photoURL}
-          width={48}
-          height={48}
-          alt={user.displayName}
-          onClick={handleOpen}
-        />
+        {user.photoURL ? (
+          <img
+            className="photo"
+            src={user.photoURL}
+            width={48}
+            height={48}
+            alt={user.displayName ?? 'user'}
+            onClick={handleOpen}
+          />
+        ) : (
+          <div className="default-user" onClick={handleOpen}>
+            {user.displayName.substr(0, 1)}
+          </div>
+        )}
         {open && (
           <div className="user">
-            <p>{user.displayName}</p>
+            {user.displayName && <p>{user.displayName}</p>}
             <p>{user.email}</p>
-            <Link className="link" to="/settings">
-              Settings
-            </Link>
+            <p className="link">
+              <Link to="/settings">Settings</Link>
+            </p>
             <button onClick={handleLogout}>Logout</button>
           </div>
         )}

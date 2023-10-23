@@ -30,6 +30,15 @@
   text-align: center;
 }
 
+.error a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.error a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .uploading,
 .loading {
   position: relative;

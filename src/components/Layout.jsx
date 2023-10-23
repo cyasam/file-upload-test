@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 
 Layout.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export default function Layout({ children }) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import {
   getAuth,
@@ -103,6 +103,12 @@ export default function Login() {
             <button onClick={() => handleProviderLogin()}>
               Sign in with Google
             </button>
+          </div>
+
+          <div className="register-area">
+            <Link className="button" to="/register">
+              Create New Account
+            </Link>
           </div>
         </div>
       </div>

@@ -84,6 +84,8 @@ export default function UserSettings() {
     }
   };
 
+  const emailVerified = user.emailVerified;
+
   return (
     <Layout>
       <div className="newpassword-area">
@@ -96,21 +98,42 @@ export default function UserSettings() {
           </>
         )}
 
+        {!emailVerified && (
+          <div className="error">
+            Please verify email address. Check your inbox.{' '}
+            <a href="/settings">Refresh</a>
+          </div>
+        )}
+
         {methods && (
           <form onSubmit={handleSubmit}>
             <div className="row">
               <label>Email</label>
-              <input type="text" disabled={true} value={user.email} />
+              <input
+                type="text"
+                autoComplete="email"
+                disabled={true}
+                value={user.email}
+                readOnly
+              />
             </div>
             {methods.includes('password') && (
               <div className="row">
                 <label>Current Password</label>
-                <input type="password" ref={currentPasswordRef} />
+                <input
+                  type="password"
+                  autoComplete="current-password"
+                  ref={currentPasswordRef}
+                />
               </div>
             )}
             <div className="row">
               <label>New Password</label>
-              <input type="password" ref={newPasswordRef} />
+              <input
+                type="password"
+                autoComplete="new-password"
+                ref={newPasswordRef}
+              />
             </div>
             <div className="row">
               <button disabled={loading} type="submit">

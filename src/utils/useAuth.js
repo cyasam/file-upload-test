@@ -21,6 +21,7 @@ export default function useAuth() {
           uid: user.uid,
           displayName: user.displayName,
           email: user.email,
+          emailVerified: user.emailVerified,
           photoURL: user.photoURL
         }
 

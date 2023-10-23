@@ -1,11 +1,12 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import PrivateRoutes from './components/PrivateRoutes';
 import UserSettings from './pages/UserSettings';
 import useAuth from './utils/useAuth';
-import './App.css';
 import Loading from './assets/loading.svg';
+import './App.css';
 
 function App() {
   const { loading } = useAuth();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/settings" element={<UserSettings />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
