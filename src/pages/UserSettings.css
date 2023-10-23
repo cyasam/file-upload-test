@@ -1,4 +1,29 @@
-.newpassword-area {
+.settings-area {
   margin: 0 auto;
-  max-width: 400px;
+  display: flex;
+}
+
+.settings-area .column {
+  width: 50%;
+  margin: 0 20px;
+}
+
+.settings-area .bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-area .bottom .result {
+  margin-bottom: 0;
+}
+@media only screen and (max-width: 767px) {
+  .settings-area {
+    display: block;
+  }
+  .settings-area .column {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 50px;
+  }
 }
