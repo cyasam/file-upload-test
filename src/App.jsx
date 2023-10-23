@@ -11,6 +11,7 @@ import Loading from './assets/loading.svg';
 import './App.css';
 import NotFound from './pages/NotFound';
 import AuthAction from './pages/AuthAction';
+import VerifyEmail from './pages/VerifyEmail';
 
 function App() {
   const { loading } = useAuth();
@@ -36,6 +37,7 @@ function App() {
         <Route index element={<ForgotPassword />} />
         <Route path="change" element={<ForgotPasswordChange />} />
       </Route>
+      <Route path="/verify-email" element={<VerifyEmail />} />
       <Route path="/register" element={<Register />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

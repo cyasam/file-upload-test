@@ -70,6 +70,7 @@ export default function ForgotPasswordChange() {
       const email = await checkOOBCode();
       if (!email) {
         navigate('/login');
+        return;
       }
     };
 

@@ -12,14 +12,13 @@ export default function UserSettings() {
 
   return (
     <Layout>
+      {!emailVerified && (
+        <div className="error">
+          Please verify email address. Check your inbox.{' '}
+          <a href="/settings">Refresh</a>
+        </div>
+      )}
       <div className="settings-area">
-        {!emailVerified && (
-          <div className="error">
-            Please verify email address. Check your inbox.{' '}
-            <a href="/settings">Refresh</a>
-          </div>
-        )}
-
         <div className="column">
           <UpdateUserProfileForm />
         </div>
