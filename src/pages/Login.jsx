@@ -93,6 +93,9 @@ export default function Login() {
               <input type="password" name="password" />
             </div>
             <div className="row">
+              <Link to="/forgot-password">Forgot password?</Link>
+            </div>
+            <div className="row">
               <button disabled={loading} type="submit">
                 {loading ? 'Loading' : 'Login'}
               </button>

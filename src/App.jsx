@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import PrivateRoutes from './components/PrivateRoutes';
 import UserSettings from './pages/UserSettings';
+import ForgotPassword from './pages/ForgotPassword';
 import useAuth from './utils/useAuth';
 import Loading from './assets/loading.svg';
 import './App.css';
@@ -27,6 +28,7 @@ function App() {
         <Route path="/settings" element={<UserSettings />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/register" element={<Register />} />
     </Routes>
   );
