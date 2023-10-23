@@ -78,11 +78,21 @@ export default function Register() {
             </div>
             <div className="row">
               <label>Password</label>
-              <input type="password" name="password" required />
+              <input
+                type="password"
+                name="password"
+                autoComplete="password"
+                required
+              />
             </div>
             <div className="row">
               <label>Confirm Password</label>
-              <input type="password" name="confirmPassword" required />
+              <input
+                type="password"
+                name="confirmPassword"
+                autoComplete="password"
+                required
+              />
             </div>
             <div className="row">
               <button disabled={loading} type="submit">
