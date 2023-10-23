@@ -10,6 +10,7 @@ import useAuth from './utils/useAuth';
 import Loading from './assets/loading.svg';
 import './App.css';
 import NotFound from './pages/NotFound';
+import AuthAction from './pages/AuthAction';
 
 function App() {
   const { loading } = useAuth();
@@ -30,6 +31,7 @@ function App() {
         <Route path="/settings" element={<UserSettings />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/auth/action" element={<AuthAction />} />
       <Route path="/forgot-password">
         <Route index element={<ForgotPassword />} />
         <Route path="change" element={<ForgotPasswordChange />} />
